@@ -20,7 +20,7 @@ class SassBuild {
     }
 
     build() {
-        return this_gulp.src(this._src)
+        return this._gulp.src(this._src)
             .pipe(sass())
             .pipe(autoprefixer())
             .pipe(this._verbose

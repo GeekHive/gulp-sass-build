@@ -6,7 +6,7 @@ const path = require('path');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
-const yargs = require('yargs');
+const yargs = require('yargs').argv;
 
 class SassBuild {
     constructor(src, dest, gulp) {

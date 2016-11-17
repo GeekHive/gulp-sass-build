@@ -35,6 +35,18 @@ const css = new SassBuild(
     gulp);
 ```
 
+The `dest` argument may also be an array of destinations.
+
+```
+const css = new SassBuild(
+    `${__dirname}/assets/sass/site.scss`,
+    [
+        `${__dirname}/assets/css/site.min.css`,
+        `${__dirname}/assets/example/alternative.css`
+    ],
+    gulp);
+```
+
 ## `SassBuild#build()`
 
 The `SassBuild#build` method can be passed directly to gulp as a build task:

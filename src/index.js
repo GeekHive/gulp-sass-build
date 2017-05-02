@@ -8,6 +8,8 @@ const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 const yargs = require('yargs').argv;
 
+const isObject = a => typeof a === 'object';
+
 class SassBuild {
     constructor(src, dest, gulp) {
         this._src = src;
@@ -15,7 +17,7 @@ class SassBuild {
             Array.isArray(dest)
                 ? dest
                 : [dest];
-                
+
         this._verbose = yargs.verbose;
         this._gulp = gulp;
 
@@ -23,15 +25,18 @@ class SassBuild {
         this.watch = this.watch.bind(this);
     }
 
-    build() {
+    build(sassOptions, cssMinOptions) {
         const stream = this._gulp.src(this._src)
-            .pipe(sass())
+            .pipe(sass(
+                isObject(sassOptions) ? sassOptions : undefined
+            ))
             .pipe(autoprefixer())
             .pipe(this._verbose
                 ? gutil.noop()
-                : cssmin({
-                advanced: false
-            }));
+                : cssmin(
+                    isObject(cssMinOptions) ? cssMinOptions : { advanced: false }
+                )
+            );
 
         return this._destinations
             .reduce(

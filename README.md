@@ -6,13 +6,13 @@ A simplified, standardized, gulp-compatible build script to bundle a source file
 
 Using NPM
 
-```
+```sh
 npm install geekhive/gulp-sass-build --save-dev
 ```
 
 Using yarn
 
-```
+```sh
 yarn add geekhive/gulp-sass-build --dev
 ```
 
@@ -20,7 +20,7 @@ yarn add geekhive/gulp-sass-build --dev
 
 Require `@geekhive/gulp-sass-build` to access the build class.
 
-```
+```js
 const SassBuild = require('@geekhive/gulp-sass-build');
 ```
 
@@ -28,7 +28,7 @@ const SassBuild = require('@geekhive/gulp-sass-build');
 
 Create a new `SassBuild` object by passing it source and destination paths for the file to compile as well as a reference to `gulp`.
 
-```
+```js
 const css = new SassBuild(
     `${__dirname}/assets/sass/site.scss`,
     `${__dirname}/assets/css/site.min.css`,
@@ -37,7 +37,7 @@ const css = new SassBuild(
 
 The `dest` argument may also be an array of destinations.
 
-```
+```js
 const css = new SassBuild(
     `${__dirname}/assets/sass/site.scss`,
     [
@@ -47,12 +47,21 @@ const css = new SassBuild(
     gulp);
 ```
 
-## `SassBuild#build()`
+## `SassBuild#build(sassOptions, cssMinOptions)`
 
 The `SassBuild#build` method can be passed directly to gulp as a build task:
 
-```
+```js
 gulp.task('build:css', css.build);
+```
+
+Both [`sassOptions`](https://github.com/sass/node-sass#options) and [`cssMinOptions`](https://github.com/jakubpawlowicz/clean-css) parameters are optional.
+
+```js
+const sassOptions = './sassOptions';
+const cssMinOptions = './cssMinOptions';
+
+gulp.task('build:css', () => css.build(sassOptions, cssMinOptions));
 ```
 
 Calling `css.build` will compile the source file using Sass, Autoprefixer, and CSSMin. It will then output the result to the destination location.
@@ -61,7 +70,7 @@ Calling `css.build` will compile the source file using Sass, Autoprefixer, and C
 
 The `SassBuild#watch` method can be passed directly to gulp as a watch task:
 
-```
+```js
 gulp.task('watch:css', css.watch);
 ```
 

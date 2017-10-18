@@ -16,6 +16,22 @@ Using yarn
 yarn add geekhive/gulp-sass-build --dev
 ```
 
+## Configuration
+
+Optional configuration for processing steps can be defined in module's `package.json` from the key `SASSBuild`.  For example:
+
+```js
+{
+    // ...
+    "SASSBuild": {
+        "sass": { ... }, // SASS options
+        "autoprefixer": { ... }, // Autoprefixer options
+        "cssmin": { ... } // CSSMin options
+    },
+    // ...
+}
+```
+
 ## Usage
 
 Require `@geekhive/gulp-sass-build` to access the build class.

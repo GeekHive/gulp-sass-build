@@ -7,6 +7,11 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 const yargs = require('yargs').argv;
+const finder = require('find-package-json');
+
+const found = finder(__dirname).next();
+const packageJson = found ? found.value : {};
+const options = packageJson["SASSBuild"] || {};
 
 class SassBuild {
     constructor(src, dest, gulp) {
@@ -15,7 +20,7 @@ class SassBuild {
             Array.isArray(dest)
                 ? dest
                 : [dest];
-                
+
         this._verbose = yargs.verbose;
         this._gulp = gulp;
 
@@ -25,13 +30,11 @@ class SassBuild {
 
     build() {
         const stream = this._gulp.src(this._src)
-            .pipe(sass())
-            .pipe(autoprefixer())
+            .pipe(sass(options.sass))
+            .pipe(autoprefixer(options.autoprefixer))
             .pipe(this._verbose
                 ? gutil.noop()
-                : cssmin({
-                advanced: false
-            }));
+                : cssmin(Object.assign({ advanced: false }, options.cssmin)));
 
         return this._destinations
             .reduce(
